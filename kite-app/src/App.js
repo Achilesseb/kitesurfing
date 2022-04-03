@@ -15,11 +15,12 @@ function App() {
     fetchData().catch((err) => console.error(err.message));
   }, []);
   console.log(state);
+
   if (state == null) return <div>Loading</div>;
   return (
     <div className="App">
       <div className="map">
-        <Map />
+        <Map state={state} />
       </div>
     </div>
   );
