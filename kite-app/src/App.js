@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import Map from "./Components/Map/map-component";
 import { BounceLoader } from "react-spinners";
+import { useDispatch, useSelector } from "react-redux";
+import { setSpotsData } from "./redux/actions";
 
 function App() {
-  const [state, setState] = useState(null);
+  const dispatch = useDispatch();
+  const spotsData = useSelector((data) => data.spots);
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch(
         "https://6246b943739ac8459191ce55.mockapi.io/spot"
       )
         .then((response) => response.json())
-        .then((results) => setState(results));
+        .then((results) => dispatch(setSpotsData(results)));
     };
     fetchData().catch((err) => console.error(err.message));
   }, []);
-  console.log(state);
+  console.log(spotsData);
 
-  if (state == null)
+  if (spotsData == null)
     return (
       <div className="waiting">
         <span className="waiting-label">Loading...</span>
@@ -27,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <div className="map">
-        <Map state={state} />
+        <Map />
       </div>
     </div>
   );

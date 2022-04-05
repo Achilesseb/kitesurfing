@@ -5,13 +5,13 @@ import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
 import { fixMarkerIcon, SpotDataContext } from "../../utils";
 import SpotMarkers from "../Markers/markers-component";
+import { useSelector } from "react-redux";
 
 const MyMap = () => {
   const map = useMap();
   return <SpotMarkers />;
 };
-const Map = (props) => {
-  const spotData = props.state;
+const Map = () => {
   fixMarkerIcon(L);
 
   return (
@@ -24,9 +24,8 @@ const Map = (props) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <SpotDataContext.Provider value={spotData}>
-        <MyMap />
-      </SpotDataContext.Provider>
+
+      <MyMap />
     </MapContainer>
   );
 };

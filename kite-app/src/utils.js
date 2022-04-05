@@ -1,5 +1,3 @@
-import { createContext } from "react";
-
 export const fixMarkerIcon = (L) => {
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -8,5 +6,3 @@ export const fixMarkerIcon = (L) => {
     shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   });
 };
-
-export const SpotDataContext = createContext(null);
