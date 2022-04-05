@@ -8,4 +8,6 @@ export const setSelectedSpot = (option) => ({
   payload: option,
 });
 
-
+export const deleteSpotsData = () => ({
+  type: "DELETE_SPOTS_DATA",
+});

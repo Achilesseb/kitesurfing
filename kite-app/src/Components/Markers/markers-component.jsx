@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import { useSelector } from "react-redux";
-import { SpotDataContext } from "../../utils";
+import PopUp from "../Popups/popUp-component";
 
 const SpotMarkers = () => {
   const spotsData = useSelector((datas) => datas.spots);
   return spotsData.map((spot) => (
-    <Marker position={[spot.lat, spot.long]} key={spot.id}>
+    <Marker position={[spot.lat, spot.long]}>
       <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
+        <PopUp props={spot} />
       </Popup>
     </Marker>
   ));
