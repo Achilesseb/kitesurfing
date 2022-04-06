@@ -16,6 +16,7 @@
     "react-spinners": "^0.11.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "reselect": "^4.1.5",
     "sass": "^1.49.11"
   },
   "scripts": {

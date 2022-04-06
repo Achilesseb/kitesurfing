@@ -1,3 +1,6 @@
+import { createSelectorHook } from "react-redux";
+import { createSelector } from "reselect";
+
 const INITIAL_STATE = {
   spots: [],
   selectedSpot: {},
@@ -30,8 +33,41 @@ const reducer = (state = INITIAL_STATE, action) => {
         filters: [],
       };
     }
+    case "FILTERED_SPOTS": {
+      return {
+        ...state,
+        spots: action.payload,
+      };
+    }
     default:
       return state;
   }
 };
 export default reducer;
+
+const selectSpots = (state) => state.spots;
+
+export const selectFilteredSpots = createSelector(
+  selectSpots,
+  (state) => state.filters,
+  (spots, filters) => {
+    let spotData;
+    if (filters.length === 0) spotData = spots;
+    if (filters[0] === null) {
+      spotData = spots.filter((spots) => spots.probability == filters[1]);
+    }
+    if (filters[1] === null) {
+      spotData = spots.filter((spots) =>
+        spots.country.includes(
+          String(filters[0].slice(0, 1)).toUpperCase() + filters[0].slice(1)
+        )
+      );
+    }
+    if (filters[0] && filters[1])
+      spotData = spots.filter(
+        (spots) =>
+          spots.country === filters[0] && spots.probability == filters[1]
+      );
+    return spotData;
+  }
+);

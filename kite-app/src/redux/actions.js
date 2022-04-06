@@ -12,11 +12,14 @@ export const deleteSpotsData = () => ({
   type: "DELETE_SPOTS_DATA",
 });
 
-export const filterSpotsData = (filters) => ({
+export const setFilters = (filters) => ({
   type: "FILTER_SPOTS_DATA",
   payload: filters,
 });
-
+export const setFilteredSpots = (data) => ({
+  type: "SET_FILTERED_DATA",
+  payload: data,
+});
 export const deleteFilters = () => ({
   type: "DELETE_FILTERS",
 });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import filter from "./filter.png";
 import "./filter-component.styles.scss";
-import { filterSpotsData, deleteFilters } from "../../redux/actions";
+import { setFilters, deleteFilters } from "../../redux/actions";
 const FilterButton = () => {
   const dispatch = useDispatch();
   const [dropBox, setDropStatus] = useState(false);
@@ -10,14 +10,14 @@ const FilterButton = () => {
     setDropStatus(true);
     dispatch(deleteFilters());
   };
-
+  const handleMouseLeave = () => setDropStatus(false);
   const DropBox = () => {
     const [country, setCountry] = useState(null);
     const [wind, setWind] = useState(null);
     const handleClickConfirmFilter = (e) => {
       e.preventDefault();
       setDropStatus(false);
-      dispatch(filterSpotsData([country, wind]));
+      dispatch(setFilters([country, wind]));
     };
     return (
       <form
@@ -64,7 +64,7 @@ const FilterButton = () => {
     );
   else
     return (
-      <div className="dropBox">
+      <div className="dropBox" onMouseLeave={handleMouseLeave}>
         <DropBox />
       </div>
     );
