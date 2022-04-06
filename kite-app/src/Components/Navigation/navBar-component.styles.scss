@@ -1,0 +1,21 @@
+.navigation-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95vw;
+  border-radius: 1vh;
+  height: 7vh;
+  background-color: #1e3b79;
+  padding: none;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  align-items: center;
+  margin-right: 5vh;
+  margin-left: 5vh;
+}
+.name {
+  font-size: 2em;
+  font-family: "Dancing Script", cursive;
+  color: white;
+}

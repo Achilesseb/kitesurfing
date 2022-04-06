@@ -4,6 +4,7 @@ import Map from "./Components/Map/map-component";
 import { BounceLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "./utils";
+import NavBar from "./Components/Navigation/navBar-component";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ function App() {
 
   return (
     <div className="App">
+      <div className="navigation-bar">
+        <NavBar />
+      </div>
+
       <div className="map">
         <Map />
       </div>

@@ -1,0 +1,12 @@
+.mapContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.mapContainer.filterButton {
+  z-index: 1;
+  position: absolute;
+}
