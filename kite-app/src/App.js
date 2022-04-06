@@ -9,6 +9,8 @@ import NavBar from "./Components/Navigation/navBar-component";
 function App() {
   const dispatch = useDispatch();
   const spotsData = useSelector((data) => data.spots);
+  const data = useSelector((data) => data);
+  console.log(data);
   console.log(spotsData);
 
   useEffect(() => {

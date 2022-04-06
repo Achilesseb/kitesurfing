@@ -1,9 +1,11 @@
 const INITIAL_STATE = {
   spots: [],
   selectedSpot: {},
+  filters: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
+  console.log(action);
   switch (action.type) {
     case "SET_SPOTS_DATA": {
       return { ...state, spots: action.payload };
@@ -15,6 +17,18 @@ const reducer = (state = INITIAL_STATE, action) => {
 
     case "DELETE_SPOTS_DATA": {
       return { state: INITIAL_STATE };
+    }
+    case "FILTER_SPOTS_DATA": {
+      return {
+        ...state,
+        filters: state.filters.concat(action.payload),
+      };
+    }
+    case "DELETE_FILTERS": {
+      return {
+        ...state,
+        filters: [],
+      };
     }
     default:
       return state;

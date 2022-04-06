@@ -11,3 +11,12 @@ export const setSelectedSpot = (option) => ({
 export const deleteSpotsData = () => ({
   type: "DELETE_SPOTS_DATA",
 });
+
+export const filterSpotsData = (filters) => ({
+  type: "FILTER_SPOTS_DATA",
+  payload: filters,
+});
+
+export const deleteFilters = () => ({
+  type: "DELETE_FILTERS",
+});
