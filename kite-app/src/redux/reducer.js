@@ -3,18 +3,17 @@ import { createSelector } from "reselect";
 
 const INITIAL_STATE = {
   spots: [],
-  selectedSpot: {},
+  selectedSpot: null,
   filters: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case "SET_SPOTS_DATA": {
       return { ...state, spots: action.payload };
     }
 
-    case "SET_SELECTED_DATA": {
+    case "SET_SELECTED_SPOT": {
       return { ...state, selectedSpot: (state.selectedSpot = action.payload) };
     }
 
@@ -33,7 +32,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         filters: [],
       };
     }
-    case "FILTERED_SPOTS": {
+    case "SET_FILTERED_DATA": {
       return {
         ...state,
         spots: action.payload,

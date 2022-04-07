@@ -29,7 +29,7 @@ const PopUp = (props) => {
           </span>
         </h4>
       </div>
-      <table>
+      <table className="popUp-table">
         <tbody>
           <PopupRow entries={entries} />
         </tbody>

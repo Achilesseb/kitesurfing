@@ -46,3 +46,13 @@ export const formatPopUpValueData = (data) => {
 export const toUpperCamelCase = (word) => {
   return `${word.slice(0, 1).toUpperCase() + word.slice(1)}`;
 };
+
+export const setCenterCoords = (selectedSpotData) => {
+  let lat, long;
+  if (selectedSpotData === null) {
+    return [(lat = 51.505), (long = -0.09)];
+  }
+  if (selectedSpotData !== null) {
+    return [(lat = selectedSpotData.lat), (long = selectedSpotData.long)];
+  }
+};
