@@ -1,5 +1,5 @@
-import React from "react";
-import { Marker, Popup, useMap } from "react-leaflet";
+import React, { useEffect } from "react";
+import { Marker, Popup } from "react-leaflet";
 import { useSelector } from "react-redux";
 import PopUp from "../Popups/popUp-component";
 import "./markers-component.styles.scss";
@@ -7,22 +7,28 @@ import { selectFilteredSpots } from "../../redux/reducer";
 import { greenIcon, redIcon } from "../../utils";
 import { useDispatch } from "react-redux";
 import { setSelectedSpot } from "../../redux/actions";
+import { useMap } from "react-leaflet";
 
 const SpotMarkers = () => {
+  const map = useMap();
   let idToFind;
   const dispatch = useDispatch();
   const data = useSelector((data) => data);
   const selectedSpot = data.selectedSpot;
+  useEffect(() => {
+    if (selectedSpot !== null) {
+      map.closePopup();
+      map.setView([selectedSpot.lat, selectedSpot.long], 3);
+    }
+  });
   const handleMarkerClick = (e) => {
     idToFind = e.target.options.children.props.children.props.props.id;
     const spotToFind = data.spots.find((spot) => spot.id === idToFind);
     if (selectedSpot === null || selectedSpot.id !== idToFind)
       dispatch(setSelectedSpot(spotToFind));
-
     return false;
   };
   const spots = useSelector(selectFilteredSpots);
-
   return spots.map((spot) => (
     <Marker
       eventHandlers={{ click: (e) => handleMarkerClick(e) }}

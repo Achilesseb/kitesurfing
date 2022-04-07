@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "./utils";
 import NavBar from "./Components/Navigation/navBar-component";
 import TableComponent from "./Components/Table/table-component";
+import LocationFilter from "./Components/LocationFilter/locationFilter-component";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
         <Map />
       </div>
       <div className="table">
+        <LocationFilter />
         <TableComponent />
       </div>
     </div>

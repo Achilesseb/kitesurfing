@@ -10,21 +10,14 @@ import "./map-component.styles.scss";
 import { useSelector } from "react-redux";
 import { setCenterCoords } from "../../utils";
 
-const MyMap = (props) => {
-  const center = props.props;
-  const map = useMap();
-  const southWest = L.latLng(200, 200),
-    northEast = L.latLng(-200, -200),
-    bounds = L.latLngBounds(southWest, northEast);
-  map.closePopup();
-  map.setMaxBounds(bounds);
-  map.setView(center);
-  return <SpotMarkers />;
-};
 const Map = () => {
   const selectedSpotData = useSelector((data) => data.selectedSpot);
   const centerCoord = setCenterCoords(selectedSpotData);
   fixMarkerIcon(L);
+  const southWest = L.latLng(-300, -300),
+    northEast = L.latLng(300, 300),
+    bounds = L.latLngBounds(southWest, northEast);
+
   return (
     <div className="mapContainer">
       <MapContainer
@@ -38,13 +31,15 @@ const Map = () => {
           zIndex: "0",
           backgroundColor: "white",
         }}
+        maxBounds={bounds}
       >
+        {/* <MyMap props={centerCoord} /> */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           style={{ zIndex: "0" }}
         />
-        <MyMap props={centerCoord} />
+        <SpotMarkers />
       </MapContainer>
       <div className="mapContainer filterButton">
         <FilterButton />

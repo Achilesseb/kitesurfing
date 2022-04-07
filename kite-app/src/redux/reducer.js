@@ -56,10 +56,14 @@ export const selectFilteredSpots = createSelector(
       spotData = spots.filter((spots) => spots.probability == filters[1]);
     }
     if (filters[1] === null) {
-      spotData = spots.filter((spots) =>
-        spots.country.includes(
-          String(filters[0].slice(0, 1)).toUpperCase() + filters[0].slice(1)
-        )
+      spotData = spots.filter(
+        (spots) =>
+          spots.country.includes(
+            String(filters[0].slice(0, 1)).toUpperCase() + filters[0].slice(1)
+          ) ||
+          spots.name.includes(
+            String(filters[0].slice(0, 1)).toUpperCase() + filters[0].slice(1)
+          )
       );
     }
     if (filters[0] && filters[1])

@@ -12,6 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch } from "react-redux";
 import { setSelectedSpot } from "../../redux/actions";
+import { formatPopUpValueData } from "../../utils";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 50 },
@@ -22,7 +23,7 @@ const columns = [
     align: "right",
   },
   {
-    id: "lat",
+    id: "latitude",
     label: "Latitude",
     minWidth: 100,
     align: "right",
@@ -30,7 +31,7 @@ const columns = [
   },
 
   {
-    id: "long",
+    id: "longitude",
     label: "Longitude",
     minWidth: 50,
     align: "right",
@@ -50,8 +51,18 @@ const columns = [
     align: "right",
   },
 ];
-function createData({ name, lat, long, country, probability, month }) {
-  return { name, country, lat, long, probability, month };
+function createData({ name, lat, long, country, probability, month, id }) {
+  let latitude, longitude;
+  const dataToFormat = {
+    lat: lat,
+    long: long,
+  };
+  const data = Object.entries(dataToFormat).map((data) =>
+    formatPopUpValueData(data)
+  );
+  latitude = data[0];
+  longitude = data[1];
+  return { name, country, latitude, longitude, probability, month, id };
 }
 
 const TableComponent = () => {
@@ -61,8 +72,8 @@ const TableComponent = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleRowClick = (e) => {
-    const nameToFind = e.target.innerText;
-    const dataToFind = state.find((data) => data.name === nameToFind);
+    const idToFind = e.target.id;
+    const dataToFind = state.find((data) => data.id === idToFind);
     dispatch(setSelectedSpot(dataToFind));
     window.scrollTo(0, 0);
   };
@@ -102,11 +113,9 @@ const TableComponent = () => {
               .map((row) => {
                 return (
                   <TableRow
-                    on={{ click: handleRowClick }}
                     hover
-                    key={row.code}
-                    onClick={handleRowClick}
-                    sx={{ zIndex: "0" }}
+                    key={row.id}
+                    onClick={(e) => handleRowClick(e)}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -114,7 +123,7 @@ const TableComponent = () => {
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          sx={{ zIndex: "-1" }}
+                          id={row.id}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)
