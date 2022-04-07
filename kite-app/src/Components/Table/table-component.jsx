@@ -61,10 +61,10 @@ const TableComponent = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleRowClick = (e) => {
-    console.log(e.target);
     const nameToFind = e.target.innerText;
     const dataToFind = state.find((data) => data.name === nameToFind);
-    return dispatch(setSelectedSpot(dataToFind));
+    dispatch(setSelectedSpot(dataToFind));
+    window.scrollTo(0, 0);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -102,6 +102,7 @@ const TableComponent = () => {
               .map((row) => {
                 return (
                   <TableRow
+                    on={{ click: handleRowClick }}
                     hover
                     key={row.code}
                     onClick={handleRowClick}

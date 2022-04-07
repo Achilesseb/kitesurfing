@@ -13,9 +13,10 @@ import { setCenterCoords } from "../../utils";
 const MyMap = (props) => {
   const center = props.props;
   const map = useMap();
-  const southWest = L.latLng(180, 180),
-    northEast = L.latLng(-180, -180),
+  const southWest = L.latLng(200, 200),
+    northEast = L.latLng(-200, -200),
     bounds = L.latLngBounds(southWest, northEast);
+  map.closePopup();
   map.setMaxBounds(bounds);
   map.setView(center);
   return <SpotMarkers />;
@@ -33,7 +34,7 @@ const Map = () => {
         minZoom={2}
         style={{
           width: "100%",
-          height: "70vh",
+          height: "60vh",
           zIndex: "0",
           backgroundColor: "white",
         }}

@@ -1,4 +1,5 @@
 import { setSpotsData } from "./redux/actions";
+import * as L from "leaflet";
 export const fixMarkerIcon = (L) => {
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -56,3 +57,24 @@ export const setCenterCoords = (selectedSpotData) => {
     return [(lat = selectedSpotData.lat), (long = selectedSpotData.long)];
   }
 };
+
+export const redIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 12],
+  popupAnchor: [1, 1],
+  shadowSize: [41, 41],
+});
+export const greenIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 12],
+  popupAnchor: [1, 1],
+  shadowSize: [41, 41],
+});
