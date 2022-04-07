@@ -23,3 +23,8 @@ export const setFilteredSpots = (data) => ({
 export const deleteFilters = () => ({
   type: "DELETE_FILTERS",
 });
+
+export const setAddSpotStatus = (option) => ({
+  type: "SET_ADD_STATUS",
+  payload: option,
+});

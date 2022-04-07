@@ -21,6 +21,7 @@ const LocationFilter = () => {
       onChange={(e) => handleOnChange(e)}
       onRequestSearch={setSearchLocation}
       onCancelSearch={() => dispatch(deleteFilters())}
+      placeholder="Search by Name or Country"
     />
   );
 };

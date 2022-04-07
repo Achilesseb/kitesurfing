@@ -9,9 +9,26 @@ import FilterButton from "../Filter/filter-component";
 import "./map-component.styles.scss";
 import { useSelector } from "react-redux";
 import { setCenterCoords } from "../../utils";
+import AddNewLocation from "../NewLocation/form-component";
+
+const MyMap = () => {
+  const map = useMap();
+  map.on("click", function (e) {
+    const popLocation = e.latlng;
+    const latlng = map.mouseEventToLatLng(e.originalEvent);
+    console.log(latlng);
+    const { lat, lng } = latlng;
+    var newMarker = new L.marker(e.latlng).addTo(map);
+    newMarker.bindPopup().setLatLng(popLocation).setContent().openOn(map);
+  });
+  return;
+};
 
 const Map = () => {
-  const selectedSpotData = useSelector((data) => data.selectedSpot);
+  const data = useSelector((data) => data);
+  const selectedSpotData = data.selectedSpot;
+  const addBoxStatus = data.addSpotStatus;
+  console.log(addBoxStatus);
   const centerCoord = setCenterCoords(selectedSpotData);
   fixMarkerIcon(L);
   const southWest = L.latLng(-300, -300),
@@ -33,14 +50,17 @@ const Map = () => {
         }}
         maxBounds={bounds}
       >
-        {/* <MyMap props={centerCoord} /> */}
+        <MyMap />
+        <SpotMarkers />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url=" https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
           style={{ zIndex: "0" }}
         />
-        <SpotMarkers />
       </MapContainer>
+      <div className="addLocation-box">
+        {addBoxStatus === true ? <AddNewLocation /> : null}
+      </div>
       <div className="mapContainer filterButton">
         <FilterButton />
       </div>

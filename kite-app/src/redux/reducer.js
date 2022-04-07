@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   spots: [],
   selectedSpot: null,
   filters: [],
+  addSpotStatus: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -36,6 +37,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         spots: action.payload,
+      };
+    }
+    case "SET_ADD_STATUS": {
+      return {
+        ...state,
+        addSpotStatus: action.payload,
       };
     }
     default:

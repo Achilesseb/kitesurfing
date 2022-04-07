@@ -3,10 +3,12 @@
   height: 100%;
   display: flex;
   justify-content: flex-end;
-
 }
 
 .mapContainer.filterButton {
   z-index: 1;
   position: absolute;
+}
+.addLocation-box {
+  z-index: 2;
 }
