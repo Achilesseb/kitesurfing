@@ -45,6 +45,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         addSpotStatus: action.payload,
       };
     }
+    case "UPDATE_SPOT_DATA": {
+      return {
+        ...state,
+        spots: state.spots.concat(action.payload),
+      };
+    }
     default:
       return state;
   }

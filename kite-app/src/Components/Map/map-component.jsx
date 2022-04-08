@@ -10,36 +10,37 @@ import "./map-component.styles.scss";
 import { useSelector } from "react-redux";
 import { setCenterCoords } from "../../utils";
 import AddNewLocation from "../NewLocation/form-component";
-
-const MyMap = () => {
-  const map = useMap();
-  map.on("click", function (e) {
-    const popLocation = e.latlng;
-    const latlng = map.mouseEventToLatLng(e.originalEvent);
-    console.log(latlng);
-    const { lat, lng } = latlng;
-    var newMarker = new L.marker(e.latlng).addTo(map);
-    newMarker.bindPopup().setLatLng(popLocation).setContent().openOn(map);
-  });
-  return;
-};
+import { useState } from "react";
 
 const Map = () => {
   const data = useSelector((data) => data);
+  const length = data.spots.length;
   const selectedSpotData = data.selectedSpot;
   const addBoxStatus = data.addSpotStatus;
-  console.log(addBoxStatus);
   const centerCoord = setCenterCoords(selectedSpotData);
   fixMarkerIcon(L);
   const southWest = L.latLng(-300, -300),
     northEast = L.latLng(300, 300),
     bounds = L.latLngBounds(southWest, northEast);
+  const [coords, setCoords] = useState(null);
+  const MyMap = () => {
+    let newMarker;
+    const map = useMap();
+    map.on("click", function (e) {
+      if (newMarker != undefined) map.removeLayer(newMarker);
+      const popLocation = e.latlng;
+      const latlng = map.mouseEventToLatLng(e.originalEvent);
+      newMarker = L.marker(e.latlng, { draggable: true });
+      map.addLayer(newMarker);
+      setCoords(latlng);
+    });
+  };
 
   return (
     <div className="mapContainer">
       <MapContainer
         center={centerCoord}
-        zoom={6}
+        zoom={3}
         maxZoom={10}
         minZoom={2}
         style={{
@@ -59,7 +60,9 @@ const Map = () => {
         />
       </MapContainer>
       <div className="addLocation-box">
-        {addBoxStatus === true ? <AddNewLocation /> : null}
+        {addBoxStatus === true ? (
+          <AddNewLocation props={{ coords, length }} />
+        ) : null}
       </div>
       <div className="mapContainer filterButton">
         <FilterButton />

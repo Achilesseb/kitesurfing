@@ -78,3 +78,16 @@ export const greenIcon = new L.Icon({
   popupAnchor: [1, 1],
   shadowSize: [41, 41],
 });
+export const postData = async (data) =>
+  await fetch("https://6246b943739ac8459191ce55.mockapi.io/spot", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });

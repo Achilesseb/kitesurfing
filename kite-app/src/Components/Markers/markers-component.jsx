@@ -18,7 +18,7 @@ const SpotMarkers = () => {
   useEffect(() => {
     if (selectedSpot !== null) {
       map.closePopup();
-      map.setView([selectedSpot.lat, selectedSpot.long], 3);
+      map.setView([selectedSpot.lat, selectedSpot.long]);
     }
   });
   const handleMarkerClick = (e) => {

@@ -28,3 +28,8 @@ export const setAddSpotStatus = (option) => ({
   type: "SET_ADD_STATUS",
   payload: option,
 });
+
+export const updateSpotData = (option) => ({
+  type: "UPDATE_SPOT_DATA",
+  payload: option,
+});
