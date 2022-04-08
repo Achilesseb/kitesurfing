@@ -3,7 +3,8 @@ import "./navBar-component.styles.scss";
 import Avatar from "@mui/material/Avatar";
 import AddNewLocation from "../NewLocation/form-component";
 import { useDispatch } from "react-redux";
-import { setAddSpotStatus } from "../../redux/actions";
+import { setAddSpotStatus } from "../../redux/spotSlice/actions";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -16,12 +17,16 @@ const NavBar = () => {
 
   return (
     <div className="navigation-bar">
-      <span className="name">Kite</span>
+      <Link to="/" className="name">
+        Kite
+      </Link>
       <div className="navigators">
         <button className="add-button" onClick={handleClick}>
           Add SPOT
         </button>
-        <Avatar src="/broken-image.jpg" />
+        <Link to="/login">
+          <Avatar src="/broken-image.jpg" />
+        </Link>
       </div>
     </div>
   );

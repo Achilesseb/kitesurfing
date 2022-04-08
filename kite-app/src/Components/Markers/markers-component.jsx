@@ -3,17 +3,17 @@ import { Marker, Popup } from "react-leaflet";
 import { useSelector } from "react-redux";
 import PopUp from "../Popups/popUp-component";
 import "./markers-component.styles.scss";
-import { selectFilteredSpots } from "../../redux/reducer";
+import { selectFilteredSpots } from "../../redux/spotSlice/spotSlice";
 import { greenIcon, redIcon } from "../../utils";
 import { useDispatch } from "react-redux";
-import { setSelectedSpot } from "../../redux/actions";
+import { setSelectedSpot } from "../../redux/spotSlice/actions";
 import { useMap } from "react-leaflet";
 
 const SpotMarkers = () => {
   const map = useMap();
   let idToFind;
   const dispatch = useDispatch();
-  const data = useSelector((data) => data);
+  const data = useSelector((data) => data.spots);
   const selectedSpot = data.selectedSpot;
   useEffect(() => {
     if (selectedSpot !== null) {

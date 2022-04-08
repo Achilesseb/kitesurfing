@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   addSpotStatus: false,
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const spotReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SET_SPOTS_DATA": {
       return { ...state, spots: action.payload };
@@ -55,13 +55,15 @@ const reducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-export default reducer;
+export default spotReducer;
 
-const selectSpots = (state) => state.spots;
+const selectSpots = (state) => {
+  return state.spots.spots;
+};
 
 export const selectFilteredSpots = createSelector(
   selectSpots,
-  (state) => state.filters,
+  (state) => state.spots.filters,
   (spots, filters) => {
     let spotData;
     if (filters.length === 0) spotData = spots;

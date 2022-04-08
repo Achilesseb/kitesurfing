@@ -13,7 +13,7 @@ import AddNewLocation from "../NewLocation/form-component";
 import { useState } from "react";
 
 const Map = () => {
-  const data = useSelector((data) => data);
+  const data = useSelector((data) => data.spots);
   const length = data.spots.length;
   const selectedSpotData = data.selectedSpot;
   const addBoxStatus = data.addSpotStatus;

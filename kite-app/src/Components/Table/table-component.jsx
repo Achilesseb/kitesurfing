@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./table-component.styles.scss";
 import { useSelector } from "react-redux";
-import { selectFilteredSpots } from "../../redux/reducer";
+import { selectFilteredSpots } from "../../redux/spotSlice/spotSlice";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +11,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch } from "react-redux";
-import { setSelectedSpot } from "../../redux/actions";
+import { setSelectedSpot } from "../../redux/spotSlice/actions";
 import { formatPopUpValueData } from "../../utils";
 
 const columns = [

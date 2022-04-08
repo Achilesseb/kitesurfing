@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { postData } from "../../utils";
-import { updateSpotData } from "../../redux/actions";
+import { updateSpotData } from "../../redux/spotSlice/actions";
 import { useDispatch } from "react-redux";
 
 const AddNewLocation = ({ props }) => {

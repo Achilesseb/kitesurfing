@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import filter from "./filter.png";
 import "./filter-component.styles.scss";
-import { setFilters, deleteFilters } from "../../redux/actions";
+import { setFilters, deleteFilters } from "../../redux/spotSlice/actions";
 const FilterButton = () => {
   const dispatch = useDispatch();
   const [dropBox, setDropStatus] = useState(false);

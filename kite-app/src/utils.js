@@ -1,4 +1,4 @@
-import { setSpotsData } from "./redux/actions";
+import { setSpotsData } from "./redux/spotSlice/actions";
 import * as L from "leaflet";
 export const fixMarkerIcon = (L) => {
   delete L.Icon.Default.prototype._getIconUrl;
@@ -80,6 +80,20 @@ export const greenIcon = new L.Icon({
 });
 export const postData = async (data) =>
   await fetch("https://6246b943739ac8459191ce55.mockapi.io/spot", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+
+export const logIn = async (data) =>
+  await fetch("https://6246b943739ac8459191ce55.mockapi.io/login", {
     method: "POST",
     headers: {
       Accept: "application/json",

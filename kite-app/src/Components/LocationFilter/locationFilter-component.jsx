@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "material-ui-search-bar";
 import { useDispatch } from "react-redux";
-import { setFilters, deleteFilters } from "../../redux/actions";
+import { setFilters, deleteFilters } from "../../redux/spotSlice/actions";
 
 const LocationFilter = () => {
   const dispatch = useDispatch();
