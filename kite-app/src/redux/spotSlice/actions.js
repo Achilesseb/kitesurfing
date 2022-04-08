@@ -3,6 +3,11 @@ export const setSpotsData = (data) => ({
   payload: data,
 });
 
+export const setFavouritesData = (data) => ({
+  type: "SET_FAVOURITES_DATA",
+  payload: data,
+});
+
 export const setSelectedSpot = (option) => ({
   type: "SET_SELECTED_SPOT",
   payload: option,

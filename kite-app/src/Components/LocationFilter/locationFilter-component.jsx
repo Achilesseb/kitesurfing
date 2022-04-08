@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "material-ui-search-bar";
 import { useDispatch } from "react-redux";
 import { setFilters, deleteFilters } from "../../redux/spotSlice/actions";
 
 const LocationFilter = () => {
   const dispatch = useDispatch();
-  let toFind;
+  const [toFind, setToFind] = useState(undefined);
   const handleOnChange = (e) => {
-    toFind = e;
+    setToFind(e);
   };
   const setSearchLocation = () => {
     dispatch(deleteFilters());
     dispatch(setFilters([toFind, null]));
-    toFind = "";
+    setToFind(undefined);
   };
 
   return (

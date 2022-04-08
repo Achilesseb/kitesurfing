@@ -1,6 +1,5 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import { useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
 import { fixMarkerIcon } from "../../utils";
@@ -11,6 +10,7 @@ import { useSelector } from "react-redux";
 import { setCenterCoords } from "../../utils";
 import AddNewLocation from "../NewLocation/form-component";
 import { useState } from "react";
+import { MapCurrentPosition } from "./map-current-position";
 
 const Map = () => {
   const data = useSelector((data) => data.spots);
@@ -23,18 +23,6 @@ const Map = () => {
     northEast = L.latLng(300, 300),
     bounds = L.latLngBounds(southWest, northEast);
   const [coords, setCoords] = useState(null);
-  const MyMap = () => {
-    let newMarker;
-    const map = useMap();
-    map.on("click", function (e) {
-      if (newMarker != undefined) map.removeLayer(newMarker);
-      const popLocation = e.latlng;
-      const latlng = map.mouseEventToLatLng(e.originalEvent);
-      newMarker = L.marker(e.latlng, { draggable: true });
-      map.addLayer(newMarker);
-      setCoords(latlng);
-    });
-  };
 
   return (
     <div className="mapContainer">
@@ -51,7 +39,7 @@ const Map = () => {
         }}
         maxBounds={bounds}
       >
-        <MyMap />
+        <MapCurrentPosition setCurrentPosition={setCoords} />
         <SpotMarkers />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

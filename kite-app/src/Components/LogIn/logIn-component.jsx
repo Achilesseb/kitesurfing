@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userName, setUserName] = useState(null);
-  const [password, setPassword] = useState(null);
-  const handleAbordClick = () => navigate("/");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const goToRoot = () => navigate("/");
   const handleChange = (e) => {
     if (e.target.placeholder === "username") setUserName(e.target.value);
     if (e.target.placeholder === "password") setPassword(e.target.value);
@@ -20,6 +20,8 @@ const LogIn = () => {
     if (userName !== null) {
       const userData = { userName: userName, password: password };
       logIn({ userData, dispatch });
+
+      return goToRoot();
     }
   };
 
@@ -51,7 +53,7 @@ const LogIn = () => {
           >
             LogIn{" "}
           </button>
-          <button onClick={handleAbordClick} className="event-buttons cancel">
+          <button onClick={goToRoot} className="event-buttons cancel">
             Abort
           </button>
         </span>

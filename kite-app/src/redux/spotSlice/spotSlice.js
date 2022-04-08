@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   selectedSpot: null,
   filters: [],
   addSpotStatus: false,
+  favourites: [],
 };
 
 const spotReducer = (state = INITIAL_STATE, action) => {
@@ -13,7 +14,9 @@ const spotReducer = (state = INITIAL_STATE, action) => {
     case "SET_SPOTS_DATA": {
       return { ...state, spots: action.payload };
     }
-
+    case "SET_FAVOURITES_DATA": {
+      return { ...state, favourites: action.payload };
+    }
     case "SET_SELECTED_SPOT": {
       return { ...state, selectedSpot: (state.selectedSpot = action.payload) };
     }
@@ -66,11 +69,10 @@ export const selectFilteredSpots = createSelector(
   (state) => state.spots.filters,
   (spots, filters) => {
     let spotData;
-    if (filters.length === 0) spotData = spots;
-    if (filters[0] === null) {
+    if (filters.length === 0 || (!filters[0] && !filters[1])) spotData = spots;
+    else if (filters[0] === null) {
       spotData = spots.filter((spots) => spots.probability == filters[1]);
-    }
-    if (filters[1] === null) {
+    } else if (filters[1] === null) {
       spotData = spots.filter(
         (spots) =>
           spots.country.includes(
@@ -80,8 +82,7 @@ export const selectFilteredSpots = createSelector(
             String(filters[0].slice(0, 1)).toUpperCase() + filters[0].slice(1)
           )
       );
-    }
-    if (filters[0] && filters[1])
+    } else if (filters[0] && filters[1])
       spotData = spots.filter(
         (spots) =>
           spots.country === filters[0] && spots.probability == filters[1]

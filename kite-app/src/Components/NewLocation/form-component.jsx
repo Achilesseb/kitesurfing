@@ -13,8 +13,7 @@ import { useDispatch } from "react-redux";
 
 const AddNewLocation = ({ props }) => {
   const dispatch = useDispatch();
-  const coords = props.coords;
-  const length = props.length;
+  const { coords, length } = props;
   const [value, setValue] = useState(new Date());
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");

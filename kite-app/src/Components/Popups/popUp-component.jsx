@@ -15,9 +15,10 @@ const PopupRow = (props) => {
     </tr>
   ));
 };
-const PopUp = (props) => {
-  const data = props.props;
+const PopUp = ({ props, isFavourite }) => {
+  const data = props;
   const entries = Object.entries(data).slice(3, -1);
+
   return (
     <div className="pop-up">
       <div className="kite-label">
@@ -33,7 +34,11 @@ const PopUp = (props) => {
           <PopupRow entries={entries} />
         </tbody>
       </table>
-      <button className="favorites-button">+ Add to favorites</button>
+      {isFavourite ? (
+        "FAV"
+      ) : (
+        <button className="favorites-button">+ Add to favorites</button>
+      )}
     </div>
   );
 };

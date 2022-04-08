@@ -23,7 +23,8 @@
 .navigators {
   display: flex;
   flex-direction: row;
-  column-gap: 2vh;
+  column-gap: 3vh;
+  align-items: center;
 }
 .add-button {
   background-color: #fff;
@@ -33,4 +34,17 @@
   font-weight: 600;
   padding: 1vh;
   border-radius: 1vh;
+  max-height: 7vh;
+}
+.loggedIn-user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1vh;
+  margin-top: 0.5vh;
+}
+.loggIn-user-welcome {
+  font-size: 1em;
+  color: white;
 }

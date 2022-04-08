@@ -1,5 +1,5 @@
-import { setSpotsData } from "./redux/spotSlice/actions";
-import { setUser } from "./redux/useSlice/actions";
+import { setFavouritesData, setSpotsData } from "./redux/spotSlice/actions";
+import { setUserId, setUser } from "./redux/userSlice/actions";
 import * as L from "leaflet";
 export const fixMarkerIcon = (L) => {
   delete L.Icon.Default.prototype._getIconUrl;
@@ -10,13 +10,59 @@ export const fixMarkerIcon = (L) => {
   });
 };
 
-const DATA_URL = "https://6246b943739ac8459191ce55.mockapi.io/spot";
+const MAIN_URL = "https://6246b943739ac8459191ce55.mockapi.io";
+const DATA_URL = MAIN_URL + "/spot";
+const USER_URL = MAIN_URL + "/user";
+const LOGIN_URL = MAIN_URL + "/login";
+const FAVOURITES_URL = MAIN_URL + "/favourites";
 export const fetchData = async (dispatch) => {
   await fetch(DATA_URL)
     .then((response) => response.json())
     .then((results) => dispatch(setSpotsData(results)));
 };
 
+export const getUserId = async ({ userId, dispatch }) => {
+  await fetch(USER_URL + "/" + userId)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      dispatch(setUser(data));
+    });
+};
+
+export const getFavourites = async ({ dispatch }) => {
+  await fetch(FAVOURITES_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("favourites", data);
+      dispatch(setFavouritesData(data));
+    });
+};
+
+export const logIn = async ({ userData, dispatch }) => {
+  console.log(userData);
+  await fetch(LOGIN_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      return getUserId({ dispatch, userId: data.userId });
+    });
+};
+
+export const fetchUsers = async (dispatch, userId) => {
+  await fetch(USER_URL)
+    .then((response) => response.json())
+    .then((results) => {
+      console.log(results);
+      dispatch(setUser(results));
+    });
+};
 export const formatPopUpLabelData = (data) => {
   if (data === "lat") return "latitude";
   if (data === "long") return "longitude";
@@ -79,8 +125,18 @@ export const greenIcon = new L.Icon({
   popupAnchor: [1, 1],
   shadowSize: [41, 41],
 });
+export const yellowIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 12],
+  popupAnchor: [1, 1],
+  shadowSize: [41, 41],
+});
 export const postData = async (data) =>
-  await fetch("https://6246b943739ac8459191ce55.mockapi.io/spot", {
+  await fetch(DATA_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -91,19 +147,4 @@ export const postData = async (data) =>
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-    });
-
-export const logIn = async ({ data, dispatch }) =>
-  await fetch("https://6246b943739ac8459191ce55.mockapi.io/login", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      dispatch(setUser(data));
     });
