@@ -1,4 +1,5 @@
 import { setSpotsData } from "./redux/spotSlice/actions";
+import { setUser } from "./redux/useSlice/actions";
 import * as L from "leaflet";
 export const fixMarkerIcon = (L) => {
   delete L.Icon.Default.prototype._getIconUrl;
@@ -92,7 +93,7 @@ export const postData = async (data) =>
       console.log(data);
     });
 
-export const logIn = async (data) =>
+export const logIn = async ({ data, dispatch }) =>
   await fetch("https://6246b943739ac8459191ce55.mockapi.io/login", {
     method: "POST",
     headers: {
@@ -104,4 +105,5 @@ export const logIn = async (data) =>
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      dispatch(setUser(data));
     });

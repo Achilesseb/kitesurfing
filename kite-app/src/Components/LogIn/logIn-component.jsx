@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./logIn-component.styles.scss";
 import { logIn } from "../../utils";
+import { useDispatch } from "react-redux";
 
 const LogIn = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userName, setUserName] = useState(null);
   const [password, setPassword] = useState(null);
@@ -15,7 +17,10 @@ const LogIn = () => {
   };
   const handleClickedConfirmed = (e) => {
     e.preventDefault();
-    if (userName !== null) logIn({ userName: userName, password: password });
+    if (userName !== null) {
+      const userData = { userName: userName, password: password };
+      logIn({ userData, dispatch });
+    }
   };
 
   return (
