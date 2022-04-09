@@ -12,6 +12,7 @@
   margin-left: 1vw;
   &.country {
     opacity: 0.7;
+    font-size: 1em;
   }
 }
 .popup-row {
@@ -35,15 +36,24 @@
   border: 3px outset #3b5999;
   border-bottom-left-radius: 2vh;
   border-bottom-right-radius: 2vh;
-  background-color: orange;
-  color: white;
+
   cursor: pointer;
-  &.listed {
+  &.delete {
+    background-color: orange;
+    color: white;
   }
-  &.notListed {
+  &.add {
+    background-color: red;
+    color: white;
   }
 }
 .popUp-table {
   margin-left: 2vw;
   margin-right: 2vw;
+}
+.country-fav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 }

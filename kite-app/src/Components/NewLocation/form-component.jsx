@@ -7,8 +7,11 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Box from "@mui/material/Box";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { useState } from "react";
-import { postData } from "../../utils";
-import { updateSpotData } from "../../redux/spotSlice/actions";
+import { postData } from "../../api-utils";
+import {
+  updateSpotData,
+  setAddSpotStatus,
+} from "../../redux/spotSlice/actions";
 import { useDispatch } from "react-redux";
 
 const AddNewLocation = ({ props }) => {
@@ -35,6 +38,7 @@ const AddNewLocation = ({ props }) => {
     };
     postData(data);
     dispatch(updateSpotData(data));
+    dispatch(setAddSpotStatus());
   };
   const handleDataChange = (e) => {
     e.preventDefault();
@@ -92,7 +96,15 @@ const AddNewLocation = ({ props }) => {
           >
             Confirm{" "}
           </button>
-          <button className="event-buttons cancel">Cancel</button>
+          <button
+            className="event-buttons cancel"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(setAddSpotStatus());
+            }}
+          >
+            Cancel
+          </button>
         </span>
       </form>
     </div>

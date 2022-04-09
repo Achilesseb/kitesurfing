@@ -54,11 +54,7 @@ const SpotMarkers = () => {
 
   return spots.map((spot) => {
     const isFavourite =
-      data.favourites?.find((fav) => fav.spot === Number(spot.id)) !==
-      undefined;
-    if (spot.id === "12") {
-      console.log("here", spot, data.favourites, isFavourite);
-    }
+      data.favorites?.find((fav) => fav.spot === Number(spot.id)) !== undefined;
     return (
       <Marker
         eventHandlers={{ click: (e) => handleMarkerClick(e) }}
@@ -67,7 +63,11 @@ const SpotMarkers = () => {
         icon={getIcon(spot.id, selectedSpot?.id, isFavourite)}
       >
         <Popup>
-          <PopUp props={spot} isFavourite={isFavourite} />
+          <PopUp
+            props={spot}
+            isFavourite={isFavourite}
+            favorites={data.favorites}
+          />
         </Popup>
       </Marker>
     );

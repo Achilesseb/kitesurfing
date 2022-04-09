@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./table-component.styles.scss";
 import { useSelector } from "react-redux";
 import { selectFilteredSpots } from "../../redux/spotSlice/spotSlice";
 import Paper from "@mui/material/Paper";
@@ -13,6 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import { useDispatch } from "react-redux";
 import { setSelectedSpot } from "../../redux/spotSlice/actions";
 import { formatPopUpValueData } from "../../utils";
+import StarIcon from "@mui/icons-material/Star";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 50 },
@@ -69,6 +69,7 @@ const TableComponent = () => {
   const dispatch = useDispatch();
   const state = useSelector(selectFilteredSpots);
   const data = state.map((data) => createData(data));
+  const stateData = useSelector((data) => data.spots);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleRowClick = (e) => {
@@ -86,6 +87,43 @@ const TableComponent = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const TableMain = () => {
+    return data
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((row) => {
+        const isFavourite =
+          stateData.favorites?.find((fav) => fav.spot === Number(row.id)) !==
+          undefined;
+
+        return (
+          <TableRow hover key={row.id} onClick={(e) => handleRowClick(e)}>
+            {columns.map((column) => {
+              const value = row[column.id];
+              return column.id === "name" && isFavourite ? (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  id={row.id}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <StarIcon sx={{ color: "orange" }} />
+                  {column.format && typeof value === "number"
+                    ? column.format(value)
+                    : value}
+                </TableCell>
+              ) : (
+                <TableCell key={column.id} align={column.align} id={row.id}>
+                  {column.format && typeof value === "number"
+                    ? column.format(value)
+                    : value}
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        );
+      });
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", margin: "0" }}>
       <TableContainer sx={{ maxHeight: 300 }}>
@@ -108,32 +146,7 @@ const TableComponent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow
-                    hover
-                    key={row.id}
-                    onClick={(e) => handleRowClick(e)}
-                  >
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          id={row.id}
-                        >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            <TableMain />
           </TableBody>
         </Table>
       </TableContainer>

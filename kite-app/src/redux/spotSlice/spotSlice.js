@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   selectedSpot: null,
   filters: [],
   addSpotStatus: false,
-  favourites: [],
+  favorites: [],
 };
 
 const spotReducer = (state = INITIAL_STATE, action) => {
@@ -14,8 +14,8 @@ const spotReducer = (state = INITIAL_STATE, action) => {
     case "SET_SPOTS_DATA": {
       return { ...state, spots: action.payload };
     }
-    case "SET_FAVOURITES_DATA": {
-      return { ...state, favourites: action.payload };
+    case "SET_FAVORITES_DATA": {
+      return { ...state, favorites: action.payload };
     }
     case "SET_SELECTED_SPOT": {
       return { ...state, selectedSpot: (state.selectedSpot = action.payload) };
@@ -45,13 +45,22 @@ const spotReducer = (state = INITIAL_STATE, action) => {
     case "SET_ADD_STATUS": {
       return {
         ...state,
-        addSpotStatus: action.payload,
+        addSpotStatus: !state.addSpotStatus,
       };
     }
     case "UPDATE_SPOT_DATA": {
       return {
         ...state,
         spots: state.spots.concat(action.payload),
+      };
+    }
+    case "UPDATE_FAVORITES": {
+      return { ...state, favorites: state.favorites.concat(action.payload) };
+    }
+    case "DELETE_FAVORITES": {
+      return {
+        ...state,
+        favorites: state.favorites.filter((fav) => fav.id !== action.payload),
       };
     }
     default:

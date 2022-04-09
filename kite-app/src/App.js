@@ -2,26 +2,27 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { BounceLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData, fetchUsers, getFavourites } from "./utils";
+import { fetchData, getFavourites } from "./api-utils";
 import { Routes, Route } from "react-router-dom";
-import Map from "./Components/Map/map-component";
 import NavBar from "./Components/Navigation/navBar-component";
-import TableComponent from "./Components/Table/table-component";
-import LocationFilter from "./Components/LocationFilter/locationFilter-component";
 import LogIn from "./Components/LogIn/logIn-component";
 import ShowMain from "./Components/Main/main-component";
 
 const App = () => {
   const dispatch = useDispatch();
   const data = useSelector((data) => data);
-  const { spots: spotsData } = data.spots;
+  const { spots: spotsData, favorites } = data.spots;
   const { userData } = data.user;
+
   useEffect(() => {
     if (spotsData.length === 0) {
       fetchData(dispatch).catch((err) => console.error(err.message));
-      getFavourites({ dispatch });
     }
   }, []);
+
+  useEffect(() => {
+    if (userData !== undefined) getFavourites({ dispatch });
+  }, [userData]);
 
   if (spotsData.length === 0)
     return (

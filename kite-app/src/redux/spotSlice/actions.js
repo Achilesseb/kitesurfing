@@ -3,8 +3,8 @@ export const setSpotsData = (data) => ({
   payload: data,
 });
 
-export const setFavouritesData = (data) => ({
-  type: "SET_FAVOURITES_DATA",
+export const setFavoritesData = (data) => ({
+  type: "SET_FAVORITES_DATA",
   payload: data,
 });
 
@@ -29,12 +29,19 @@ export const deleteFilters = () => ({
   type: "DELETE_FILTERS",
 });
 
-export const setAddSpotStatus = (option) => ({
+export const setAddSpotStatus = () => ({
   type: "SET_ADD_STATUS",
-  payload: option,
 });
 
 export const updateSpotData = (option) => ({
   type: "UPDATE_SPOT_DATA",
   payload: option,
+});
+export const updateFavoritesData = (data) => ({
+  type: "UPDATE_FAVORITES",
+  payload: data,
+});
+export const deleteFavoritesData = (id) => ({
+  type: "DELETE_FAVORITES",
+  payload: id,
 });

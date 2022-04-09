@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./logIn-component.styles.scss";
-import { logIn } from "../../utils";
+import { logIn } from "../../api-utils";
 import { useDispatch } from "react-redux";
 
 const LogIn = () => {
@@ -20,7 +20,6 @@ const LogIn = () => {
     if (userName !== null) {
       const userData = { userName: userName, password: password };
       logIn({ userData, dispatch });
-
       return goToRoot();
     }
   };
