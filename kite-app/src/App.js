@@ -7,12 +7,14 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "./Components/Navigation/navBar-component";
 import LogIn from "./Components/LogIn/logIn-component";
 import ShowMain from "./Components/Main/main-component";
+import SignUp from "./Components/Signup/signup-component";
+import { setFavoritesData } from "./redux/spotSlice/actions";
 
 const App = () => {
   const dispatch = useDispatch();
   const data = useSelector((data) => data);
   const { spots: spotsData, favorites } = data.spots;
-  const { userData } = data.user;
+  const { userInfo } = data.user;
 
   useEffect(() => {
     if (spotsData.length === 0) {
@@ -21,9 +23,9 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (userData !== undefined) getFavourites({ dispatch });
-  }, [userData]);
-
+    if (userInfo !== null) getFavourites({ dispatch });
+  }, [userInfo]);
+  useEffect(() => () => dispatch(setFavoritesData()), []);
   if (spotsData.length === 0)
     return (
       <div className="waiting">
@@ -35,12 +37,13 @@ const App = () => {
   return (
     <div className="App">
       <div className="navigation-bar">
-        <NavBar avatar={userData?.avatar} name={userData?.name} />
+        <NavBar avatar={userInfo?.avatar} name={userInfo?.name} />
       </div>
 
       <Routes>
         <Route exact path="/" element={<ShowMain />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </div>
   );

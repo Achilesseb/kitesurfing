@@ -13,6 +13,7 @@ import {
   deleteSpotsData,
   updateFavoritesData,
   deleteFavoritesData,
+  setFavoritesData,
 } from "../../redux/spotSlice/actions";
 import { useSelector } from "react-redux";
 import { getFavourites } from "../../api-utils";
@@ -30,7 +31,7 @@ const PopupRow = (props) => {
 };
 const PopUp = ({ props, isFavourite }) => {
   const dispatch = useDispatch();
-  const favorites = useSelector((data) => data.spots.favorites);
+  const user = useSelector((data) => data.user.userInfo);
   const data = props;
   const entries = Object.entries(data).slice(3, -1);
   const handleAddFavorite = (e) => {
@@ -39,12 +40,14 @@ const PopUp = ({ props, isFavourite }) => {
       createdAt: new Date().toISOString(),
       spot: Number(data.id),
     };
-    postFavorite(dataToAdd, dispatch);
-    dispatch(updateFavoritesData(dataToAdd));
+    if (user !== null) {
+      postFavorite(dataToAdd, dispatch);
+      dispatch(updateFavoritesData(dataToAdd));
+    } else alert("Log in to toggle on favorites! :)");
   };
   const handleDeleteFavorite = () => {
     const dataId = Number(data.id);
-    deleteFavorite(dataId, dispatch);
+    deleteFavorite(dataId, dispatch, user);
   };
 
   return (

@@ -21,8 +21,8 @@ const NavBar = ({ avatar, name }) => {
   };
 
   const handleLogOutClick = () => {
-    dispatch(setUser(undefined));
-    dispatch(setFavoritesData([]));
+    dispatch(setUser(null));
+    dispatch(setFavoritesData());
   };
   return (
     <div className="navigation-bar">

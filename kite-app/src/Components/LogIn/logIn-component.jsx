@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./logIn-component.styles.scss";
 import { logIn } from "../../api-utils";
 import { useDispatch } from "react-redux";
-
+import { Link } from "react-router-dom";
 const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const LogIn = () => {
   const handleClickedConfirmed = (e) => {
     e.preventDefault();
     if (userName !== null) {
-      const userData = { userName: userName, password: password };
+      const userData = { name: userName, password: password };
       logIn({ userData, dispatch });
       return goToRoot();
     }
@@ -31,6 +31,8 @@ const LogIn = () => {
         <span>
           <label>Name</label>
           <input
+            type="text"
+            id="username"
             className="add-input"
             placeholder="username"
             onChange={handleChange}
@@ -39,6 +41,8 @@ const LogIn = () => {
         <span>
           <label>Password</label>
           <input
+            type="password"
+            id="password"
             className="add-input"
             placeholder="password"
             onChange={handleChange}
@@ -57,6 +61,18 @@ const LogIn = () => {
           </button>
         </span>
       </form>
+      <div>
+        <div>
+          <span>Don`t have an account?</span>
+          <Link
+            className="event-buttons confirm signup"
+            to="/signup"
+            style={{ textDecoration: "none" }}
+          >
+            Sign up
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

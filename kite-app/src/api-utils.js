@@ -1,9 +1,5 @@
-import {
-  setFavoritesData,
-  setSpotsData,
-  deleteFavoritesData,
-} from "./redux/spotSlice/actions";
-import { setUserId, setUser } from "./redux/userSlice/actions";
+import { setFavoritesData, setSpotsData } from "./redux/spotSlice/actions";
+import { setUser } from "./redux/userSlice/actions";
 const MAIN_URL = "https://6246b943739ac8459191ce55.mockapi.io";
 const DATA_URL = MAIN_URL + "/spot";
 const USER_URL = MAIN_URL + "/user";
@@ -33,7 +29,6 @@ export const getFavourites = async ({ dispatch }) => {
 };
 
 export const logIn = async ({ userData, dispatch }) => {
-  console.log(userData);
   await fetch(LOGIN_URL, {
     method: "POST",
     headers: {
@@ -43,16 +38,26 @@ export const logIn = async ({ userData, dispatch }) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       return getUserId({ dispatch, userId: data.userId });
     });
 };
-
+export const signUp = async ({ userData, dispatch }) => {
+  await fetch(USER_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return getUserId({ dispatch, userId: data.id });
+    });
+};
 export const fetchUsers = async (dispatch, userId) => {
   await fetch(USER_URL)
     .then((response) => response.json())
     .then((results) => {
-      console.log(results);
       dispatch(setUser(results));
     });
 };
