@@ -14,19 +14,20 @@ import { setSelectedSpot } from "../../redux/spotSlice/actions";
 import { formatPopUpValueData, sortData } from "../../utils";
 import StarIcon from "@mui/icons-material/Star";
 import TableSortLabel from "@mui/material/TableSortLabel";
+import { sortDataDescendant, sortDataAscendant } from "../../utils";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 50 },
   {
     id: "country",
     label: "Country",
-    minWidth: 100,
+    minWidth: 50,
     align: "right",
   },
   {
     id: "latitude",
     label: "Latitude",
-    minWidth: 100,
+    minWidth: 50,
     align: "right",
     format: (value) => Number.parseFloat(value).toFixed(0),
   },
@@ -48,7 +49,7 @@ const columns = [
   {
     id: "probability",
     label: "Wind Probability",
-    minWidth: 10,
+    minWidth: 50,
     align: "right",
   },
 ];
@@ -73,10 +74,9 @@ const TableComponent = () => {
   const stateData = useSelector((data) => data.spots);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedData, setSortedData] = useState();
   const [activeFilter, setActiveFilter] = useState("");
-  const [direction, setDirection] = useState("asc");
   const [tableData, setTableDate] = useState(data);
+
   const handleRowClick = (e) => {
     const idToFind = e.target.id;
     const dataToFind = state.find((data) => data.id === idToFind);
@@ -93,23 +93,20 @@ const TableComponent = () => {
     setPage(0);
   };
 
-  const toggleDirection = () => {
-    if (direction === "asc") setDirection("desc");
-    else setDirection("asc");
-  };
-  const handleSort = (filter) => {
+  const handleSortAscendant = (filter) => {
     setActiveFilter(filter);
-    toggleDirection();
-    const sorted = sortData(data, filter, direction);
-    setSortedData(sorted);
+    const sorted = sortDataAscendant(data, filter);
+    setTableDate(sorted);
+  };
+  const handleSortDescendant = (filter) => {
+    setActiveFilter(filter);
+    const sorted = sortDataDescendant(data, filter);
     setTableDate(sorted);
   };
   useEffect(() => {
-    setTableDate(state);
+    setTableDate(state.map((data) => createData(data)));
   }, [state]);
   const TableMain = () => {
-    
-
     return tableData
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((row) => {
@@ -122,12 +119,7 @@ const TableComponent = () => {
             {columns.map((column) => {
               const value = row[column.id];
               return column.id === "name" && isFavourite ? (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  id={row.id}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
+                <TableCell key={column.id} align={column.align} id={row.id}>
                   <StarIcon sx={{ color: "orange" }} />
                   {column.format && typeof value === "number"
                     ? column.format(value)
@@ -167,11 +159,20 @@ const TableComponent = () => {
                   column.id === "month" ? (
                     <TableSortLabel
                       style={{ color: "white" }}
-                      onClick={() => handleSort(column.id)}
+                      onClick={() => handleSortAscendant(column.id)}
                     />
                   ) : null}
 
                   {column.label}
+                  {column.id === "name" ||
+                  column.id === "probability" ||
+                  column.id === "month" ? (
+                    <TableSortLabel
+                      style={{ color: "white" }}
+                      onClick={() => handleSortDescendant(column.id)}
+                      direction="desc"
+                    />
+                  ) : null}
                 </TableCell>
               ))}
             </TableRow>

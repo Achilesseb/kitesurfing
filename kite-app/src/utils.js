@@ -94,43 +94,52 @@ export const yellowIcon = new L.Icon({
   popupAnchor: [1, 1],
   shadowSize: [41, 41],
 });
-export const sortData = (data, filter, direction) => {
+export const sortDataAscendant = (data, filter) => {
   if (filter === "name") {
     data.sort((a, b) => {
       const nameA = a.name.toUpperCase();
       const nameB = b.name.toUpperCase();
-      if (direction === "asc") {
-        if (nameA < nameB) return -1;
-      }
-      if (direction === "desc") {
-        if (nameA > nameB) return 1;
-      }
-      return 0;
+      if (nameA < nameB) return -1;
     });
   }
   if (filter === "month") {
     data.sort((a, b) => {
       const monthA = a.month;
       const monthB = b.month;
-      console.log(monthA, monthB);
-      if (direction === "asc") {
-        if (monthNames[monthA] < monthNames[monthB]) return -1;
-      }
-      if (direction === "desc") {
-        if (monthNames[monthA] > monthNames[monthB]) return 1;
-      }
+      if (monthNames[monthA] < monthNames[monthB]) return -1;
     });
   }
   if (filter === "probability") {
     data.sort((a, b) => {
       const probabilityA = a.probability;
       const probabilityB = b.probability;
-      if (direction === "asc") {
-        if (probabilityA < probabilityB) return -1;
-      }
-      if (direction === "desc") {
-        if (probabilityA > probabilityB) return 1;
-      }
+      if (probabilityA < probabilityB) return -1;
+    });
+  }
+
+  return data;
+};
+export const sortDataDescendant = (data, filter) => {
+  if (filter === "name") {
+    data.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA > nameB) return 1;
+    });
+  }
+  if (filter === "month") {
+    data.sort((a, b) => {
+      const monthA = a.month;
+      const monthB = b.month;
+      if (monthNames[monthA] < monthNames[monthB]) return 1;
+    });
+  }
+  if (filter === "probability") {
+    data.sort((a, b) => {
+      const probabilityA = a.probability;
+      const probabilityB = b.probability;
+
+      if (probabilityA < probabilityB) return 1;
     });
   }
 
