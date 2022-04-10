@@ -22,8 +22,12 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (userInfo !== null) getFavourites({ dispatch });
+   useEffect(() => {
+    if (userInfo !== null) {
+      if (userInfo === "Not found") {
+        return alert("User not found!");
+      } else getFavourites({ dispatch });
+    }
   }, [userInfo]);
   useEffect(() => () => dispatch(setFavoritesData()), []);
   if (spotsData.length === 0)
