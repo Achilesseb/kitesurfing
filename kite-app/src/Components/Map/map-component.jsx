@@ -19,8 +19,8 @@ const Map = () => {
   const addBoxStatus = data.addSpotStatus;
   const centerCoord = setCenterCoords(selectedSpotData);
   fixMarkerIcon(L);
-  const southWest = L.latLng(-300, -300),
-    northEast = L.latLng(300, 300),
+  const southWest = L.latLng(180, -180),
+    northEast = L.latLng(-180, 180),
     bounds = L.latLngBounds(southWest, northEast);
   const [coords, setCoords] = useState(null);
 

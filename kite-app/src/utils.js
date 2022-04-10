@@ -1,4 +1,18 @@
 import * as L from "leaflet";
+const monthNames = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12,
+};
 export const fixMarkerIcon = (L) => {
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -80,3 +94,45 @@ export const yellowIcon = new L.Icon({
   popupAnchor: [1, 1],
   shadowSize: [41, 41],
 });
+export const sortData = (data, filter, direction) => {
+  if (filter === "name") {
+    data.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (direction === "asc") {
+        if (nameA < nameB) return -1;
+      }
+      if (direction === "desc") {
+        if (nameA > nameB) return 1;
+      }
+      return 0;
+    });
+  }
+  if (filter === "month") {
+    data.sort((a, b) => {
+      const monthA = a.month;
+      const monthB = b.month;
+      console.log(monthA, monthB);
+      if (direction === "asc") {
+        if (monthNames[monthA] < monthNames[monthB]) return -1;
+      }
+      if (direction === "desc") {
+        if (monthNames[monthA] > monthNames[monthB]) return 1;
+      }
+    });
+  }
+  if (filter === "probability") {
+    data.sort((a, b) => {
+      const probabilityA = a.probability;
+      const probabilityB = b.probability;
+      if (direction === "asc") {
+        if (probabilityA < probabilityB) return -1;
+      }
+      if (direction === "desc") {
+        if (probabilityA > probabilityB) return 1;
+      }
+    });
+  }
+
+  return data;
+};

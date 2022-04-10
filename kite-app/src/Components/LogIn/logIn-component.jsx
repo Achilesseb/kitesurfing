@@ -12,8 +12,8 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const goToRoot = () => navigate("/");
   const handleChange = (e) => {
-    if (e.target.placeholder === "username") setUserName(e.target.value);
-    if (e.target.placeholder === "password") setPassword(e.target.value);
+    if (e.target.id === "username") setUserName(e.target.value);
+    if (e.target.id === "password") setPassword(e.target.value);
   };
   const handleClickedConfirmed = (e) => {
     e.preventDefault();

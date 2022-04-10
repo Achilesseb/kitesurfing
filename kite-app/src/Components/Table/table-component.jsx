@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectFilteredSpots } from "../../redux/spotSlice/spotSlice";
 import Paper from "@mui/material/Paper";
@@ -11,8 +11,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch } from "react-redux";
 import { setSelectedSpot } from "../../redux/spotSlice/actions";
-import { formatPopUpValueData } from "../../utils";
+import { formatPopUpValueData, sortData } from "../../utils";
 import StarIcon from "@mui/icons-material/Star";
+import TableSortLabel from "@mui/material/TableSortLabel";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 50 },
@@ -51,7 +52,7 @@ const columns = [
     align: "right",
   },
 ];
-function createData({ name, lat, long, country, probability, month, id }) {
+const createData = ({ name, lat, long, country, probability, month, id }) => {
   let latitude, longitude;
   const dataToFormat = {
     lat: lat,
@@ -63,7 +64,7 @@ function createData({ name, lat, long, country, probability, month, id }) {
   latitude = data[0];
   longitude = data[1];
   return { name, country, latitude, longitude, probability, month, id };
-}
+};
 
 const TableComponent = () => {
   const dispatch = useDispatch();
@@ -72,6 +73,10 @@ const TableComponent = () => {
   const stateData = useSelector((data) => data.spots);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sortedData, setSortedData] = useState();
+  const [activeFilter, setActiveFilter] = useState("");
+  const [direction, setDirection] = useState("asc");
+  const [tableData, setTableDate] = useState(data);
   const handleRowClick = (e) => {
     const idToFind = e.target.id;
     const dataToFind = state.find((data) => data.id === idToFind);
@@ -87,8 +92,25 @@ const TableComponent = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const toggleDirection = () => {
+    if (direction === "asc") setDirection("desc");
+    else setDirection("asc");
+  };
+  const handleSort = (filter) => {
+    setActiveFilter(filter);
+    toggleDirection();
+    const sorted = sortData(data, filter, direction);
+    setSortedData(sorted);
+    setTableDate(sorted);
+  };
+  useEffect(() => {
+    setTableDate(state);
+  }, [state]);
   const TableMain = () => {
-    return data
+    
+
+    return tableData
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((row) => {
         const isFavourite =
@@ -140,6 +162,15 @@ const TableComponent = () => {
                     color: "white",
                   }}
                 >
+                  {column.id === "name" ||
+                  column.id === "probability" ||
+                  column.id === "month" ? (
+                    <TableSortLabel
+                      style={{ color: "white" }}
+                      onClick={() => handleSort(column.id)}
+                    />
+                  ) : null}
+
                   {column.label}
                 </TableCell>
               ))}
@@ -153,7 +184,7 @@ const TableComponent = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={data.length}
+        count={tableData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
